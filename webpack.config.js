@@ -1,17 +1,23 @@
 module.exports = {
-    entry: './src/client.js',
+    entry: './src/client.jsx',
     output: {
         path: __dirname + '/public',
         filename: 'bundle.js'
     },
     module: {
         rules: [{
-            test: /\.js$/,
+            test: /\.jsx$/,
             exclude: /node_modules/,
             use: 'babel-loader'
+        }, {
+            test: /\.css$/,
+            use: [
+                'style-loader',
+                'css-loader'
+            ]
         }]
     },
     resolve: {
-        extensions: ['.js', '.json']
+        extensions: ['.js', '.json', '.jsx']
     }
 };

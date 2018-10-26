@@ -2,8 +2,9 @@ import express from 'express';
 const app = express();
 
 
-app.get('/api', (req, res) => res.send({
-    api: '2.0'
+app.get('/_api/cards', (req, res) => res.send({
+    api: '2.0',
+    message: 'there is no message'
 }));
 
 app.use('/', express.static('public'));
