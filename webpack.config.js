@@ -19,5 +19,8 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.json', '.jsx']
+    },
+    performance: {
+        hints: false
     }
 };

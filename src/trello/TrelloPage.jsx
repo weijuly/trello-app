@@ -1,23 +1,7 @@
 import React from 'react';
+import TrelloBoard from './TrelloBoard';
 
-class TrelloBoard extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
-    render() {
-        return (
-           <div class="row">
-                <div class="col">column</div>
-                <div class="col">column</div>
-                <div class="col">column</div>
-                <div class="col">column</div>
-           </div>
-        );
-    }
-}
 
 class TrelloPage extends React.Component {
 
@@ -52,6 +36,7 @@ class TrelloPage extends React.Component {
             <div className="container-fluid">
                 <h1>This is React JS !</h1>
                 <h2>data from server: {this.state.data}</h2>
+                <TrelloBoard/>
             </div>
         );
     }
