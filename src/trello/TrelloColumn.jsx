@@ -9,7 +9,7 @@ class TrelloColumn extends React.Component {
     render() {
         return (
             <div className="col">
-                <h2 className="text-center">Back Log</h2>
+                <h2 className="text-center">{this.props.config.name}</h2>
             </div>
         );
     }

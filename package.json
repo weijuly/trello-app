@@ -12,7 +12,7 @@
     "express-server": "node server",
     "build": "webpack --config webpack.config.js --mode production",
     "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
-    "test": "jest --coverage"
+    "test": "jest --coverage --verbose"
   },
   "author": "GopiKrishnan Ganesan <gopikrishnan.ganesan@gmail.com>",
   "license": "ISC",

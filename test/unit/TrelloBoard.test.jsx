@@ -8,7 +8,7 @@ enzyme.configure({
     adapter: new Adapter()
 });
 
-describe("Trello Board", () => {
+describe('TrelloBoard Unit Tests', () => {
     let props;
     let trelloBoard;
     let loadTrelloBoard = () => {
@@ -25,8 +25,8 @@ describe("Trello Board", () => {
         trelloBoard = undefined;
     });
 
-    describe("Trello Board", () => {
-        it("contains 4 columns", () => {
+    describe('TrelloBoard', () => {
+        it('should contains 4 columns', () => {
             trelloBoard = loadTrelloBoard();
             expect(trelloBoard.find(TrelloColumn).length).toBe(4);
         });

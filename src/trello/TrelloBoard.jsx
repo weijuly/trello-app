@@ -6,15 +6,26 @@ class TrelloBoard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.columns = [
+            {name: 'Backlog', cardStateCode: 'b'},
+            {name: 'In Progress', cardStateCode: 'i'},
+            {name: 'Completed', cardStateCode: 'c'},
+            {name: 'Blocked', cardStateCode: 'x'}
+        ];
+    }
+
+    renderTrelloColumn(config, i) {
+        return (
+            <TrelloColumn
+                config={config}
+                key={i}/>
+        );
     }
 
     render() {
         return (
             <div className="row">
-                <TrelloColumn/>
-                <TrelloColumn/>
-                <TrelloColumn/>
-                <TrelloColumn/>
+                {this.columns.map(this.renderTrelloColumn)}
            </div>
         );
     }
