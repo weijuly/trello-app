@@ -8,7 +8,7 @@ class TrelloPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            state: 'state'
+            cards: []
         }
     }
 
@@ -16,7 +16,7 @@ class TrelloPage extends React.Component {
         this.fetchCards()
             .then(response => {
                 let copyState = {...this.state};
-                copyState.data = response.message;
+                copyState.cards = response.cards;
                 this.setState(copyState);
             })
             .catch(e => console.log(e));
@@ -34,9 +34,8 @@ class TrelloPage extends React.Component {
     render() {
         return (
             <div className="container-fluid">
-                <h1>This is React JS !</h1>
-                <h2>data from server: {this.state.data}</h2>
-                <TrelloBoard/>
+                <TrelloBoard
+                    cards={this.state.cards}/>
             </div>
         );
     }

@@ -5,6 +5,7 @@ import registerServiceWorker from './registerServiceWorker';
 import TrelloPage from './trello/TrelloPage';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../lib/openiconic/font/css/open-iconic-bootstrap.min.css';
 
 ReactDOM.render((
     <BrowserRouter>

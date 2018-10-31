@@ -12,7 +12,7 @@
     "express-server": "node server",
     "build": "webpack --config webpack.config.js --mode production",
     "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
-    "test": "jest --coverage --verbose"
+    "test": "jest --coverage --verbose --detectOpenHandles"
   },
   "author": "GopiKrishnan Ganesan <gopikrishnan.ganesan@gmail.com>",
   "license": "ISC",
@@ -31,8 +31,10 @@
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "express": "^4.16.4",
+    "file-loader": "^2.0.0",
     "jest": "^23.6.0",
     "jquery": "^3.3.1",
+    "morgan": "^1.9.1",
     "popper.js": "^1.14.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
@@ -40,5 +42,10 @@
     "style-loader": "^0.23.1",
     "webpack": "^4.21.0",
     "webpack-cli": "^3.1.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "mocha": "^5.2.0"
   }
 }

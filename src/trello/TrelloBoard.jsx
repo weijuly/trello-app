@@ -6,7 +6,7 @@ class TrelloBoard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.columns = [
+        this.COLUMNS = [
             {name: 'Backlog', cardStateCode: 'b'},
             {name: 'In Progress', cardStateCode: 'i'},
             {name: 'Completed', cardStateCode: 'c'},
@@ -25,7 +25,7 @@ class TrelloBoard extends React.Component {
     render() {
         return (
             <div className="row">
-                {this.columns.map(this.renderTrelloColumn)}
+                {this.COLUMNS.map(this.renderTrelloColumn)}
            </div>
         );
     }

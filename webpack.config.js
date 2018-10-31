@@ -15,6 +15,11 @@ module.exports = {
                 'style-loader',
                 'css-loader'
             ]
+        }, {
+            test: /\.(ttf|eot|woff|woff2|otf|svg)$/,
+            use: [
+                'file-loader'
+            ]
         }]
     },
     resolve: {

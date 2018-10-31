@@ -1,11 +1,14 @@
 import express from 'express';
+import cards from './src/api/cards';
 const app = express();
 
 
-app.get('/_api/cards', (req, res) => res.send({
-    api: '2.0',
-    message: 'there is no message'
-}));
+app.use('/_api/cards', cards)
 
 app.use('/', express.static('public'));
-app.listen(process.env.PORT || 3000);
+
+const server = app.listen(process.env.PORT || 3000, () => {
+    console.log('Server listening at port 3000 for connections...');
+});
+
+module.exports = server;
