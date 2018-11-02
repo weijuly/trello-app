@@ -1,34 +1,39 @@
 import React from 'react';
-import { BACKLOG, INPROGRESS, COMPLETE, BLOCKED } from '../constants/cardstates';
+import Lookup from '../constants/lookup';
 
 class TrelloCardStateButton extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {};
-        this.CARD_STATE_ICON_MAP = {
-            BACKLOG: 'media-record',
-            INPROGRESS: 'media-play',
-            COMPLETE: 'x',
-            BLOCKED: 'check'
-        };
     }
 
     getIconClass(cardState) {
-        if (this.CARD_STATE_ICON_MAP.hasOwnProperty(cardState)) {
-            return this.CARD_STATE_ICON_MAP[cardState];
+        if (Lookup.CardStateButtonIconMap.hasOwnProperty(cardState)) {
+            return Lookup.CardStateButtonIconMap[cardState];
         }
-        return 'x';
+        return 'oi oi-x';
+    }
+
+    getButtonClass(cardState) {
+        if (Lookup.CardStateButtonContextMap.hasOwnProperty(cardState)) {
+            return Lookup.CardStateButtonContextMap[cardState];
+        }
+        return 'btn btn-danger';
+    }
+
+    handleStateChange() {
+        this.props.handleStateChange(this.props.cardState);
     }
 
     render() {
         return (
             <button
                 type="button"
-                className="btn btn-secondary">
+                onClick={this.handleStateChange.bind(this)}
+                className={this.getButtonClass(this.props.cardState)}>
                 <span 
-                    className="oi `{getIconClass(this.props.cardState)}`"
-                    title="icon-name"
+                    className={this.getIconClass(this.props.cardState)}
                     aria-hidden="true">
                 </span>
             </button>

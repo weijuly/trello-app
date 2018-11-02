@@ -6,6 +6,7 @@ import TrelloPage from './trello/TrelloPage';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../lib/openiconic/font/css/open-iconic-bootstrap.min.css';
+import 'react-datetime/css/react-datetime.css';
 
 ReactDOM.render((
     <BrowserRouter>

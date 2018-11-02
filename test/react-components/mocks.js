@@ -1,9 +1,3 @@
-import express from 'express';
-import morgan from 'morgan';
-
-morgan('combined');
-const router = express.Router();
-
 const cards = [{
     id: 1111,
     header: 'backlog work',
@@ -38,11 +32,6 @@ const cards = [{
     owner: 'rshelley'
 }];
 
-router.get('/', (req, res) => {
-    res.send({
-        cards: cards,
-        server: 'version'
-    });
-});
-
-module.exports = router;
+export default {
+    cards: cards
+};

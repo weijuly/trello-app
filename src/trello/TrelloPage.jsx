@@ -1,8 +1,6 @@
 import React from 'react';
 import TrelloBoard from './TrelloBoard';
 
-
-
 class TrelloPage extends React.Component {
 
     constructor(props) {
@@ -10,6 +8,27 @@ class TrelloPage extends React.Component {
         this.state = {
             cards: []
         }
+    }
+
+    setCardState(cardId, cardState) {
+        let copyState = {...this.state};
+        for (let card of copyState.cards) {
+            if (card.id == cardId) {
+                card.state = cardState;
+            }
+        }
+        this.setState(copyState);
+    }
+
+    setCardDueDate(cardId, date) {
+        console.log('gganesan date' + date);
+        let copyState = {...this.state};
+        for (let card of copyState.cards) {
+            if (card.id == cardId) {
+                card.due = date;
+            }
+        }
+        this.setState(copyState);
     }
 
     componentDidMount() {
@@ -35,7 +54,9 @@ class TrelloPage extends React.Component {
         return (
             <div className="container-fluid">
                 <TrelloBoard
-                    cards={this.state.cards}/>
+                    cards={this.state.cards}
+                    setCardDueDate={this.setCardDueDate.bind(this)}
+                    setCardState={this.setCardState.bind(this)}/>
             </div>
         );
     }

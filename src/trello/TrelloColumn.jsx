@@ -7,13 +7,23 @@ class TrelloColumn extends React.Component {
         this.state = {};
     }
 
+    renderCard(card, i) {
+        return (
+            <TrelloCard
+                setCardState={this.props.setCardState}
+                setCardDueDate={this.props.setCardDueDate}
+                card={card}
+                key={i}/>
+        );
+    }
+
     render() {
         return (
             <div className="col">
                 <h2 className="text-center">
                     {this.props.config.name}
                 </h2>
-                <TrelloCard/>
+                {this.props.cards.map(this.renderCard.bind(this))}
             </div>
         );
     }

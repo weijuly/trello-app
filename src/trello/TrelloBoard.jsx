@@ -7,10 +7,10 @@ class TrelloBoard extends React.Component {
         super(props);
         this.state = {};
         this.COLUMNS = [
-            {name: 'Backlog', cardStateCode: 'b'},
-            {name: 'In Progress', cardStateCode: 'i'},
-            {name: 'Completed', cardStateCode: 'c'},
-            {name: 'Blocked', cardStateCode: 'x'}
+            {name: 'Backlog', cardStateCode: 'B'},
+            {name: 'In Progress', cardStateCode: 'I'},
+            {name: 'Completed', cardStateCode: 'C'},
+            {name: 'Blocked', cardStateCode: 'X'}
         ];
     }
 
@@ -18,6 +18,9 @@ class TrelloBoard extends React.Component {
         return (
             <TrelloColumn
                 config={config}
+                cards={this.props.cards.filter(x => x.state === config.cardStateCode)}
+                setCardState={this.props.setCardState}
+                setCardDueDate={this.props.setCardDueDate}
                 key={i}/>
         );
     }
@@ -25,7 +28,7 @@ class TrelloBoard extends React.Component {
     render() {
         return (
             <div className="row">
-                {this.COLUMNS.map(this.renderTrelloColumn)}
+                {this.COLUMNS.map(this.renderTrelloColumn.bind(this))}
            </div>
         );
     }
