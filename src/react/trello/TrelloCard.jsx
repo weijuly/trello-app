@@ -1,10 +1,10 @@
-import React from 'react';
-import DateTime from 'react-datetime';
-import TrelloCardStateButton from './TrelloCardStateButton';
-import CardStates from '../constants/cardstates';
-import moment from 'moment';
 import {connect} from 'react-redux';
-import Actions from './actions';
+import Actions from '../../redux/actions';
+import CardStates from '../../constants/cardstates';
+import DateTime from 'react-datetime';
+import moment from 'moment';
+import React from 'react';
+import TrelloCardStateButton from './TrelloCardStateButton';
 
 class TrelloCard extends React.Component {
 

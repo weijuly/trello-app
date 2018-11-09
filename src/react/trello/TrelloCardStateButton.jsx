@@ -1,6 +1,5 @@
+import Lookup from '../../constants/lookup';
 import React from 'react';
-import Lookup from '../constants/lookup';
-import {connect} from 'react-redux';
 
 class TrelloCardStateButton extends React.Component {
 

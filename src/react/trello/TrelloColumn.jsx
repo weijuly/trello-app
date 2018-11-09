@@ -1,6 +1,6 @@
+import {connect} from 'react-redux';
 import React from 'react';
 import TrelloCard from './TrelloCard';
-import {connect} from 'react-redux';
 
 export class TrelloColumn extends React.Component {
     constructor(props) {

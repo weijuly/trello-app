@@ -1,7 +1,7 @@
+import {connect} from 'react-redux';
+import Actions from '../../redux/actions';
 import React from 'react';
 import TrelloBoard from './TrelloBoard';
-import {connect} from 'react-redux';
-import Actions from './actions';
 
 class TrelloPage extends React.Component {
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import TrelloCardStateButton from '../../src/trello/TrelloCardStateButton';
-import Lookup from '../../src/constants/lookup';
+import TrelloCardStateButton from '../../../src/react/trello/TrelloCardStateButton';
+import Lookup from '../../../src/constants/lookup';
 
 enzyme.configure({
     adapter: new Adapter()

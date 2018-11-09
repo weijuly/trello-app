@@ -1,5 +1,5 @@
 import express from 'express';
-import cards from './src/api/cards';
+import cards from './src/service/cards';
 const app = express();
 
 

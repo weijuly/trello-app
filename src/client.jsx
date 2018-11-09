@@ -2,14 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
-import TrelloPage from './trello/TrelloPage';
+import TrelloPage from './react/trello/TrelloPage';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../lib/openiconic/font/css/open-iconic-bootstrap.min.css';
+import '../res/openiconic/font/css/open-iconic-bootstrap.min.css';
 import 'react-datetime/css/react-datetime.css';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
-import Reducer from './trello/reducers';
+import Reducer from './redux/reducers';
 
 const store = createStore(Reducer);
 
