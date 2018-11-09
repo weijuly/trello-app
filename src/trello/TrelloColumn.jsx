@@ -1,10 +1,10 @@
 import React from 'react';
 import TrelloCard from './TrelloCard';
+import {connect} from 'react-redux';
 
 class TrelloColumn extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
     }
 
     renderCard(card, i) {
@@ -28,5 +28,10 @@ class TrelloColumn extends React.Component {
         );
     }
 }
+const mapStateToProps = (state, ownProps) => {
+    return {
+        cards: state.cards.filter(x => x.state == ownProps.config.cardStateCode)
+    };
+};
 
-export default TrelloColumn;
+export default connect(mapStateToProps)(TrelloColumn);

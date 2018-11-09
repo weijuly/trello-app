@@ -1,5 +1,6 @@
 import React from 'react';
 import Lookup from '../constants/lookup';
+import {connect} from 'react-redux';
 
 class TrelloCardStateButton extends React.Component {
 
@@ -42,3 +43,12 @@ class TrelloCardStateButton extends React.Component {
 }
 
 export default TrelloCardStateButton;
+
+// const mapStateToProps = (state, ownProps) => {
+//     console.log('>> TrelloCard.mapStateToProps >>');
+//     return {
+//         card: ownProps.card
+//     };
+// };
+
+// export default connect(mapStateToProps)(TrelloCard);

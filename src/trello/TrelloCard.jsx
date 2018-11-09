@@ -3,13 +3,13 @@ import DateTime from 'react-datetime';
 import TrelloCardStateButton from './TrelloCardStateButton';
 import CardStates from '../constants/cardstates';
 import moment from 'moment';
-
+import {connect} from 'react-redux';
+import Actions from './actions';
 
 class TrelloCard extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
         this.CardStates = [
             CardStates.BACKLOG, 
             CardStates.INPROGRESS, 
@@ -32,7 +32,7 @@ class TrelloCard extends React.Component {
     }
 
     handleDateChange (date) {
-        this.props.setCardDueDate(this.props.card.id, date);
+        this.props.dispatch(Actions.updateCardDueDate(this.props.card.id, moment(date)));
     }
 
     cardContext(date) {
@@ -80,4 +80,10 @@ class TrelloCard extends React.Component {
     }
 }
 
-export default TrelloCard;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        card: ownProps.card
+    };
+};
+
+export default connect(mapStateToProps)(TrelloCard);

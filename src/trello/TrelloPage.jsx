@@ -1,5 +1,7 @@
 import React from 'react';
 import TrelloBoard from './TrelloBoard';
+import {connect} from 'react-redux';
+import Actions from './actions';
 
 class TrelloPage extends React.Component {
 
@@ -20,23 +22,10 @@ class TrelloPage extends React.Component {
         this.setState(copyState);
     }
 
-    setCardDueDate(cardId, date) {
-        console.log('gganesan date' + date);
-        let copyState = {...this.state};
-        for (let card of copyState.cards) {
-            if (card.id == cardId) {
-                card.due = date;
-            }
-        }
-        this.setState(copyState);
-    }
-
     componentDidMount() {
         this.fetchCards()
             .then(response => {
-                let copyState = {...this.state};
-                copyState.cards = response.cards;
-                this.setState(copyState);
+                this.props.dispatch(Actions.loadCards(response.cards));
             })
             .catch(e => console.log(e));
     }
@@ -54,8 +43,6 @@ class TrelloPage extends React.Component {
         return (
             <div className="container-fluid">
                 <TrelloBoard
-                    cards={this.state.cards}
-                    setCardDueDate={this.setCardDueDate.bind(this)}
                     setCardState={this.setCardState.bind(this)}/>
             </div>
         );
@@ -63,4 +50,10 @@ class TrelloPage extends React.Component {
 
 };
 
-export default TrelloPage;
+const mapStateToProps = state => {
+    return {
+        cards: state.cards
+    };
+};
+
+export default connect(mapStateToProps)(TrelloPage);

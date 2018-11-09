@@ -1,11 +1,11 @@
 import React from 'react';
 import TrelloColumn from './TrelloColumn';
+import {connect} from 'react-redux';
 
 class TrelloBoard extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
         this.COLUMNS = [
             {name: 'Backlog', cardStateCode: 'B'},
             {name: 'In Progress', cardStateCode: 'I'},
@@ -18,9 +18,7 @@ class TrelloBoard extends React.Component {
         return (
             <TrelloColumn
                 config={config}
-                cards={this.props.cards.filter(x => x.state === config.cardStateCode)}
                 setCardState={this.props.setCardState}
-                setCardDueDate={this.props.setCardDueDate}
                 key={i}/>
         );
     }
@@ -34,4 +32,10 @@ class TrelloBoard extends React.Component {
     }
 }
 
-export default TrelloBoard;
+const mapStateToProps = state => {
+    return {
+        cards: state.cards
+    };
+};
+
+export default connect(mapStateToProps)(TrelloBoard);
