@@ -9,32 +9,32 @@ enzyme.configure({
 });
 
 describe('TrelloCardStateButton Unit Tests', () => {
-    let props;
-    let trelloCardStateButton;
-    let loadTrelloCardStateButton = (cardState) => {
-        // trelloCardStateButton = enzyme.mount(
-        //     <TrelloCardStateButton
-        //         cardState={cardState}/>
-        // );
-        // return trelloCardStateButton;
+    const loadTrelloCardStateButton = cardState => {
+        return enzyme.mount(
+            <TrelloCardStateButton cardState={cardState}/>
+        );
     };
-
-    beforeEach(() => {
-        props = undefined;
-        trelloCardStateButton = undefined;
-    });
 
     describe('TrelloCardStateButton', () => {
         it('should contain icon for all states', () => {
-            // console.log('>>> gganesan CardStateButtonIconMap:' + Lookup.CardStateButtonIconMap);
-            // let cardStates = Object.keys(Lookup.CardStateButtonIconMap);
-            // cardStates.map(cardState => {
-            //     let trelloCardStateButton = loadTrelloCardStateButton(cardState);
-            //     let cardIconName = Lookup.CardStateButtonIconMap[cardState];
-            //     console.log('>>> gganesan card icon:' + cardIconName);
-            //     expect(trelloCardStateButton.props().cardState).toBe(cardState);
-            //     //expect(trelloCardStateButton.find('span').hasClass(cardIconName)).toBe(true);
-            // });
+            const cardStates = Object.keys(Lookup.CardStateButtonIconMap);
+            cardStates.map(cardState => {
+                const trelloCardStateButton = loadTrelloCardStateButton(cardState);
+                const cardIconName = Lookup.CardStateButtonIconMap[cardState];
+                const cardContextClass = Lookup.CardStateButtonContextMap[cardState];
+                expect(trelloCardStateButton.props().cardState).toBe(cardState);
+                expect(trelloCardStateButton.find('span').hasClass(cardIconName)).toBe(true);
+                expect(trelloCardStateButton.find('button').hasClass(cardContextClass)).toBe(true);
+            });
+        });
+
+        it('should have default icon for invalid state', () => {
+            const trelloCardStateButton = loadTrelloCardStateButton('Z');
+            expect(trelloCardStateButton.props().cardState).toBe('Z');
+            expect(trelloCardStateButton.find('span').hasClass('oi oi-x')).toBe(true);
+            expect(trelloCardStateButton.find('button').hasClass('btn btn-danger')).toBe(true);
+
+
         });
     });
 });

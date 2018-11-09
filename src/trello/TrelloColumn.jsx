@@ -2,7 +2,7 @@ import React from 'react';
 import TrelloCard from './TrelloCard';
 import {connect} from 'react-redux';
 
-class TrelloColumn extends React.Component {
+export class TrelloColumn extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -10,8 +10,6 @@ class TrelloColumn extends React.Component {
     renderCard(card, i) {
         return (
             <TrelloCard
-                setCardState={this.props.setCardState}
-                setCardDueDate={this.props.setCardDueDate}
                 card={card}
                 key={i}/>
         );

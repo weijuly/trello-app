@@ -4,57 +4,41 @@ import Adapter from 'enzyme-adapter-react-16';
 import TrelloColumn from '../../src/trello/TrelloColumn';
 import Mocks from './mocks';
 import TrelloCard from '../../src/trello/TrelloCard';
+import configureStore from 'redux-mock-store';
+import {Provider} from 'react-redux';
 
 enzyme.configure({
     adapter: new Adapter()
 });
 
 describe('TrelloColumn Unit Tests', () => {
-    let props;
+
     let trelloColumn;
-    let loadTrelloColumn = (config, cards, setCardState, setCardDueDate) => {
+    const loadTrelloColumn = (config, cards) => {
+        const store = configureStore()({
+            cards: cards
+        });
         return enzyme.mount(
-            <TrelloColumn
-                config={config}
-                cards={cards}
-                setCardState={setCardState}
-                setCardDueDate={setCardDueDate}/>
+            <Provider store={store}>
+                <TrelloColumn config={config}/>
+            </Provider>
         );
     };
 
-    beforeEach(() => {
-        props = undefined;
-        trelloColumn = undefined;
-    });
-
     describe('TrelloColumn', () => {
-        let config = {
+        const config = {
             name: 'name',
-            cardStateCode: 'x'
+            cardStateCode: 'X'
         };
-        const setCardState = (cardId, cardState) => {};
-        const setCardDueDate = (cardId, date) => {};
 
-        it('should contain cards', () => {
-            trelloColumn = loadTrelloColumn(config, Mocks.cards, setCardState, setCardDueDate);
-            expect(trelloColumn.find(TrelloCard).length).toBe(4);
+        it('should contain 1 cards', () => {
+            trelloColumn = loadTrelloColumn(config, Mocks.cards);
+            expect(trelloColumn.find(TrelloCard).length).toBe(1);
         });
 
         it('should contain passed in column name', () => {
-            trelloColumn = loadTrelloColumn(config, Mocks.cards, setCardState, setCardDueDate);
+            trelloColumn = loadTrelloColumn(config, Mocks.cards);
             expect(trelloColumn.find('h2').text()).toBe('name');
-        });
-
-        it('cards should contain setCardState', () => {
-            trelloColumn = loadTrelloColumn(config, Mocks.cards, setCardState, setCardDueDate);
-            expect(trelloColumn.find(TrelloCard).first().props().setCardState).toBe(setCardState);
-            expect(trelloColumn.find(TrelloCard).last().props().setCardState).toBe(setCardState);
-        });
-        
-        it('cards should contain setCardDueDate', () => {
-            trelloColumn = loadTrelloColumn(config, Mocks.cards, setCardState, setCardDueDate);
-            expect(trelloColumn.find(TrelloCard).first().props().setCardDueDate).toBe(setCardDueDate);
-            expect(trelloColumn.find(TrelloCard).last().props().setCardDueDate).toBe(setCardDueDate);
         });
 
     });

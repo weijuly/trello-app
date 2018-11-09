@@ -62,3 +62,8 @@ typings/
 
 bundle.js
 *workspace
+public/*.woff
+public/*.eot
+public/*.otf
+public/*.ttf
+public/*.svg

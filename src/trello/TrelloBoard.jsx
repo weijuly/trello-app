@@ -2,7 +2,7 @@ import React from 'react';
 import TrelloColumn from './TrelloColumn';
 import {connect} from 'react-redux';
 
-class TrelloBoard extends React.Component {
+export class TrelloBoard extends React.Component {
 
     constructor(props) {
         super(props);
@@ -18,7 +18,6 @@ class TrelloBoard extends React.Component {
         return (
             <TrelloColumn
                 config={config}
-                setCardState={this.props.setCardState}
                 key={i}/>
         );
     }
@@ -33,9 +32,7 @@ class TrelloBoard extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return {
-        cards: state.cards
-    };
+    return {};
 };
 
 export default connect(mapStateToProps)(TrelloBoard);

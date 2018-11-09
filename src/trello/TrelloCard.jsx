@@ -18,21 +18,13 @@ class TrelloCard extends React.Component {
         ];
     }
 
-    handleStateChange(cardState) {
-        this.props.setCardState(this.props.card.id, cardState);
-    }
-
     renderCardStateButton(cardState, i) {
         return (
             <TrelloCardStateButton 
                 cardState={cardState}
-                handleStateChange={this.handleStateChange.bind(this)}
+                handleStateChange={cardState => this.props.dispatch(Actions.updateCardState(this.props.card, cardState))}
                 key={i}/>
         );
-    }
-
-    handleDateChange (date) {
-        this.props.dispatch(Actions.updateCardDueDate(this.props.card.id, moment(date)));
     }
 
     cardContext(date) {
@@ -67,7 +59,7 @@ class TrelloCard extends React.Component {
                         </div>
                         <div className="col-6">
                             <DateTime 
-                                onChange={this.handleDateChange.bind(this)}
+                                onChange={date => this.props.dispatch(Actions.updateCardDueDate(this.props.card, date))}
                                 value={moment(this.props.card.due)}
                                 closeOnSelect={true}
                                 dateFormat='DD-MMM-YYYY'

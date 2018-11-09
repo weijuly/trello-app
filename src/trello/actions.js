@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const Actions = {
     loadCards: cards => {
         return {
@@ -5,11 +7,18 @@ const Actions = {
             cards: cards
         }
     },
-    updateCardDueDate: (cardId, date) => {
+    updateCardDueDate: (card, date) => {
         return {
             type: 'UPDATE_CARD_DUE_DATE',
-            cardId: cardId,
-            date: date.toISOString()
+            cardId: card.id,
+            date: moment(date).toISOString()
+        }
+    },
+    updateCardState: (card, cardState) => {
+        return {
+            type: 'UPDATE_CARD_STATE',
+            cardId: card.id,
+            cardState: cardState
         }
     }
 };

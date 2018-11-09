@@ -6,7 +6,6 @@ class TrelloCardStateButton extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
     }
 
     getIconClass(cardState) {
@@ -23,15 +22,11 @@ class TrelloCardStateButton extends React.Component {
         return 'btn btn-danger';
     }
 
-    handleStateChange() {
-        this.props.handleStateChange(this.props.cardState);
-    }
-
     render() {
         return (
             <button
                 type="button"
-                onClick={this.handleStateChange.bind(this)}
+                onClick={() => this.props.handleStateChange(this.props.cardState)}
                 className={this.getButtonClass(this.props.cardState)}>
                 <span 
                     className={this.getIconClass(this.props.cardState)}
@@ -43,12 +38,3 @@ class TrelloCardStateButton extends React.Component {
 }
 
 export default TrelloCardStateButton;
-
-// const mapStateToProps = (state, ownProps) => {
-//     console.log('>> TrelloCard.mapStateToProps >>');
-//     return {
-//         card: ownProps.card
-//     };
-// };
-
-// export default connect(mapStateToProps)(TrelloCard);

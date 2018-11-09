@@ -7,19 +7,6 @@ class TrelloPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            cards: []
-        }
-    }
-
-    setCardState(cardId, cardState) {
-        let copyState = {...this.state};
-        for (let card of copyState.cards) {
-            if (card.id == cardId) {
-                card.state = cardState;
-            }
-        }
-        this.setState(copyState);
     }
 
     componentDidMount() {
@@ -42,8 +29,7 @@ class TrelloPage extends React.Component {
     render() {
         return (
             <div className="container-fluid">
-                <TrelloBoard
-                    setCardState={this.setCardState.bind(this)}/>
+                <TrelloBoard/>
             </div>
         );
     }

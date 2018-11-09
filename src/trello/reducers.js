@@ -4,23 +4,21 @@ const initialState = {
 
 const Reducer = (state = initialState, action) => {
     console.log('>> dispatcher: action: ' + action.type);
-    let copyState = {...state};
     switch (action.type) {
         case 'LOAD_CARDS':
-            copyState.cards = action.cards;
-            return copyState;
+            return {...state, cards: action.cards};
         case 'UPDATE_CARD_DUE_DATE':
-            for (let i = 0; i < copyState.cards.length; i++) {
-                if (copyState.cards[i].id !== action.cardId) {
-                    continue;
-                }
-                let copyCard = {...copyState.cards[i]};
-                copyCard.due = action.date;
-                copyState.cards[i] = copyCard;
-                return copyState;
-            }
+            return {
+                ...state,
+                cards: state.cards.map(x => x.id === action.cardId ? {...x, due: action.date} : x)
+            };
+        case 'UPDATE_CARD_STATE':
+            return {
+                ...state, 
+                cards: state.cards.map(x => x.id === action.cardId ? {...x, state: action.cardState} : x)
+            };
         default:
-            return copyState;
+            return {...state};
     }
 };
 
