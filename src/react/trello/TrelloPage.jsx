@@ -2,6 +2,8 @@ import {connect} from 'react-redux';
 import Actions from '../../redux/actions';
 import React from 'react';
 import TrelloBoard from './TrelloBoard';
+import TrelloHeader from './TrelloHeader';
+import TrelloCreateCardModal from './TrelloCreateCardModal';
 
 class TrelloPage extends React.Component {
 
@@ -29,6 +31,8 @@ class TrelloPage extends React.Component {
     render() {
         return (
             <div className="container-fluid">
+                <TrelloHeader/>
+                <TrelloCreateCardModal/>
                 <TrelloBoard/>
             </div>
         );
