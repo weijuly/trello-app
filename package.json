@@ -9,7 +9,7 @@
   },
   "scripts": {
     "webpack-watch": "webpack -w --mode development",
-    "express-server": "node server",
+    "express-server": "node index",
     "build": "webpack --config webpack.config.js --mode production",
     "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
     "test": "jest --coverage --verbose --detectOpenHandles"

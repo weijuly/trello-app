@@ -5,7 +5,7 @@ import registerServiceWorker from './registerServiceWorker';
 import TrelloPage from './react/trello/TrelloPage';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../res/openiconic/font/css/open-iconic-bootstrap.min.css';
+import './resources/openiconic/font/css/open-iconic-bootstrap.min.css';
 import 'react-datetime/css/react-datetime.css';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
