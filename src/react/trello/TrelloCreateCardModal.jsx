@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import Modal from 'react-bootstrap4-modal';
 import Datetime from 'react-datetime';
 import Actions from '../../redux/actions';
+import moment from 'moment';
 
 class TrelloCreateCardModal extends React.Component {
 
@@ -10,10 +11,10 @@ class TrelloCreateCardModal extends React.Component {
         super(props);
         this.state = {
             valid: false,
-            date: null
+            date: null,
+            card: null
         };
         this.cardTitleBox = React.createRef();
-        this.cardDateBox = React.createRef();
         this.cardAssnBox = React.createRef();
         this.cardDescBox = React.createRef();
     }
@@ -23,14 +24,59 @@ class TrelloCreateCardModal extends React.Component {
     }
 
     validate() {
-        if (!this.cardAssnBox.current.value 
-            || !this.state.date
-            || !this.cardDescBox.current.value
-            || !this.cardTitleBox.current.value) {
-                this.setState({...this.state, valid: false});
-                return;
+        const header = this.cardTitleBox.current.value;
+        const description = this.cardDescBox.current.value;
+        const owner = this.cardAssnBox.current.value;
+        const due = this.state.date;
+        if (!header || !due || !description || !owner) {
+                this.setState({
+                    ...this.state, 
+                    valid: false
+                });
+        } else {
+            this.setState({
+                ...this.state,
+                valid: true,
+                card: {
+                    header: header,
+                    description: description,
+                    state: 'B',
+                    created: moment(),
+                    due: moment(due).toISOString(),
+                    owner: owner
+                }
+            });
         }
-        this.setState({...this.state, valid: true});
+    }
+
+    handleAddCard = async() => {
+        let response = await fetch('/_api/cards', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(this.state.card)
+        });
+        let body = await response.json();
+        if (response.status != 201) {
+            console.log('Cannot update cards');
+            return;
+        }
+        response = await fetch('/_api/cards', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            }
+        });
+        body = await response.json();
+        if (response.status != 200) {
+            console.log('Cannot get cards');
+            return;
+        }
+        this.props.dispatch(Actions.hideAddCard());
+        this.props.dispatch(Actions.loadCards(body.cards));
     }
 
     render() {
@@ -56,7 +102,6 @@ class TrelloCreateCardModal extends React.Component {
                                         closeOnSelect={true}
                                         dateFormat='MM/DD/YYYY'
                                         onChange={this.handleDateChange.bind(this)}
-                                        ref={this.cardDateBox}
                                         timeFormat=''/>
                                 </div>
                                 <div className="col">
@@ -87,6 +132,7 @@ class TrelloCreateCardModal extends React.Component {
                     <button
                         type="button"
                         disabled={!this.state.valid}
+                        onClick={this.handleAddCard.bind(this)}
                         className="btn btn-success">
                         <span className="oi oi-check"></span>
                     </button>

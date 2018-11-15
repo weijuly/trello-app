@@ -1,10 +1,8 @@
 import express from 'express';
-import morgan from 'morgan';
 
-morgan('combined');
 const router = express.Router();
 
-const cards = [{
+let cards = [{
     id: 1111,
     header: 'backlog work',
     description: 'this work has not started yet',
@@ -12,7 +10,7 @@ const cards = [{
     created: '2019-01-30T17:57:07+00:00',
     due: '2019-01-30T17:57:07+00:00',
     owner: 'gganesan'
-},{
+}, {
     id: 2222,
     header: 'in progress work',
     description: 'this work is in progress',
@@ -20,7 +18,7 @@ const cards = [{
     created: '2019-03-30T17:57:07+00:00',
     due: '2019-04-30T17:57:07+00:00',
     owner: 'jdoe'
-},{
+}, {
     id: 3333,
     header: 'completed work',
     description: 'this work is completed',
@@ -28,7 +26,7 @@ const cards = [{
     created: '2019-05-30T17:57:07+00:00',
     due: '2019-06-30T17:57:07+00:00',
     owner: 'jsmith'
-},{
+}, {
     id: 4444,
     header: 'blocked work',
     description: 'this work is blocked',
@@ -43,6 +41,12 @@ router.get('/', (req, res) => {
         cards: cards,
         server: 'version'
     });
+});
+router.post('/', (req, res) => {
+    let card = {...req.body};
+    card.id = Math.floor(Math.random() * 100000);
+    cards = [...cards, card];
+    res.status(201).send(card);
 });
 
 module.exports = router;

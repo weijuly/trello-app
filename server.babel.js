@@ -1,9 +1,13 @@
 import express from 'express';
 import cards from './src/service/cards';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+
 const app = express();
 
-
-app.use('/_api/cards', cards)
+app.use('/_api', morgan('combined'));
+app.use('/_api', bodyParser());
+app.use('/_api/cards', cards);
 
 app.use('/', express.static('public'));
 
