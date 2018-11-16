@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import Modal from 'react-bootstrap4-modal';
 import Datetime from 'react-datetime';
 import Actions from '../../redux/actions';
+import Server from '../../utils/server';
 import moment from 'moment';
 
 class TrelloCreateCardModal extends React.Component {
@@ -11,8 +12,8 @@ class TrelloCreateCardModal extends React.Component {
         super(props);
         this.state = {
             valid: false,
-            date: null,
-            card: null
+            date: undefined,
+            card: undefined
         };
         this.cardTitleBox = React.createRef();
         this.cardAssnBox = React.createRef();
@@ -49,34 +50,14 @@ class TrelloCreateCardModal extends React.Component {
         }
     }
 
-    handleAddCard = async() => {
-        let response = await fetch('/_api/cards', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(this.state.card)
-        });
-        let body = await response.json();
-        if (response.status != 201) {
-            console.log('Cannot update cards');
-            return;
-        }
-        response = await fetch('/_api/cards', {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json'
-            }
-        });
-        body = await response.json();
-        if (response.status != 200) {
-            console.log('Cannot get cards');
-            return;
-        }
-        this.props.dispatch(Actions.hideAddCard());
-        this.props.dispatch(Actions.loadCards(body.cards));
+    handleAddCard = async () => {
+        await Server.addCard(this.state.card)
+        Server.getCards()
+            .then(response => this.props.dispatch(Actions.loadCards(response.cards)))
+            .then(() => this.props.dispatch(Actions.hideAddCard()))
+            .catch(error => {
+                console.log('error: ' + error);
+            });
     }
 
     render() {

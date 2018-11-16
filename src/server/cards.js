@@ -1,52 +1,44 @@
 import express from 'express';
+import Connection from './persistence';
+import logger from './logger';
 
 const router = express.Router();
-
-let cards = [{
-    id: 1111,
-    header: 'backlog work',
-    description: 'this work has not started yet',
-    state: 'B',
-    created: '2019-01-30T17:57:07+00:00',
-    due: '2019-01-30T17:57:07+00:00',
-    owner: 'gganesan'
-}, {
-    id: 2222,
-    header: 'in progress work',
-    description: 'this work is in progress',
-    state: 'I',
-    created: '2019-03-30T17:57:07+00:00',
-    due: '2019-04-30T17:57:07+00:00',
-    owner: 'jdoe'
-}, {
-    id: 3333,
-    header: 'completed work',
-    description: 'this work is completed',
-    state: 'C',
-    created: '2019-05-30T17:57:07+00:00',
-    due: '2019-06-30T17:57:07+00:00',
-    owner: 'jsmith'
-}, {
-    id: 4444,
-    header: 'blocked work',
-    description: 'this work is blocked',
-    state: 'X',
-    created: '2019-07-30T17:57:07+00:00',
-    due: '2019-08-30T17:57:07+00:00',
-    owner: 'rshelley'
-}];
+const connection = Connection.getInstance();
 
 router.get('/', (req, res) => {
-    res.send({
-        cards: cards,
-        server: 'version'
-    });
+    connection
+        .getCards()
+        .then(cards => res.send({
+            cards: cards,
+            server: 'version'
+        }))
+        .catch(error => res.status(500).send({
+            error: error
+        }));
+});
+router.get('/:cardId', (req, res) => {
+    connection
+        .getCard(req.params.cardId)
+        .then(card => res.send(card))
+        .catch(error => res.status(404).send({
+            error: error
+        }));
 });
 router.post('/', (req, res) => {
-    let card = {...req.body};
-    card.id = Math.floor(Math.random() * 100000);
-    cards = [...cards, card];
-    res.status(201).send(card);
+    connection
+        .addCard(req.body)
+        .then(card => res.status(201).send(card))
+        .catch(error => res.status(400).send({
+            error: error
+        }));
+});
+router.patch('/:cardId', (req, res) => {
+    connection
+        .updateCard(req.body)
+        .then(card => res.send(card))
+        .catch(error => res.send(500).send({
+            error: error
+        }));
 });
 
 module.exports = router;

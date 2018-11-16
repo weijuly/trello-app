@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const Reducer = (state = initialState, action) => {
-    console.log('>> dispatcher: action: ' + action.type);
+    console.log('>> dispatcher: recieved action: ' + action.type);
     switch (action.type) {
         case 'LOAD_CARDS':
             return {

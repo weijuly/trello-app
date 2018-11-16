@@ -4,6 +4,7 @@ import React from 'react';
 import TrelloBoard from './TrelloBoard';
 import TrelloHeader from './TrelloHeader';
 import TrelloCreateCardModal from './TrelloCreateCardModal';
+import Server from '../../utils/server';
 
 class TrelloPage extends React.Component {
 
@@ -12,20 +13,11 @@ class TrelloPage extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchCards()
-            .then(response => {
-                this.props.dispatch(Actions.loadCards(response.cards));
-            })
-            .catch(e => console.log(e));
-    }
-
-    fetchCards = async() => {
-        const response = await fetch('/_api/cards');
-        const body = await response.json();
-        if(response.status !== 200) {
-            console.log('error occured');
-        }
-        return body;
+        Server.getCards()
+            .then(response => this.props.dispatch(Actions.loadCards(response.cards)))
+            .catch(error => {
+                console.log('error :' + error);
+            });
     }
 
     render() {
