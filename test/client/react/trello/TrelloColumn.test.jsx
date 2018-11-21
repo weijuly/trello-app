@@ -1,9 +1,9 @@
 import React from 'react';
 import enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import TrelloColumn from '../../../src/react/trello/TrelloColumn';
+import TrelloColumn from '../../../../src/client/react/trello/TrelloColumn';
 import Mocks from '../../mocks/mocks';
-import TrelloCard from '../../../src/react/trello/TrelloCard';
+import TrelloCard from '../../../../src/client/react/trello/TrelloCard';
 import configureStore from 'redux-mock-store';
 import {Provider} from 'react-redux';
 

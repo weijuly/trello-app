@@ -5,6 +5,7 @@ import DateTime from 'react-datetime';
 import moment from 'moment';
 import React from 'react';
 import TrelloCardStateButton from './TrelloCardStateButton';
+import Server from '../../utils/server';
 
 class TrelloCard extends React.Component {
 
@@ -34,6 +35,17 @@ class TrelloCard extends React.Component {
         return 'card';
     }
 
+    handleCardDueDateChange(date) {
+        const card = {
+            ...this.props.card,
+            due: moment(date).toISOString()
+        };
+        Server.updateCard(card)
+            .then(Server.getCards())
+            .then(response => this.props.dispatch(Actions.loadCards(response.cards)))
+            .catch(error => console.log(error));
+    }
+
     render() {
         return (
             <div className={this.cardContext(this.props.card.due)}>
@@ -59,7 +71,7 @@ class TrelloCard extends React.Component {
                         </div>
                         <div className="col-6">
                             <DateTime 
-                                onChange={date => this.props.dispatch(Actions.updateCardDueDate(this.props.card, date))}
+                                onChange={this.handleCardDueDateChange.bind(this)}
                                 value={moment(this.props.card.due)}
                                 closeOnSelect={true}
                                 dateFormat='DD-MMM-YYYY'

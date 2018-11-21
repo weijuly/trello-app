@@ -16,11 +16,16 @@ app.use('/', express.static('public'));
 
 const connection = Connection.getInstance();
 let server = undefined;
-connection
+
+
+module.exports = connection
     .connect()
     .then(() => logger.info('Connected to databbase'))
     .then(() => app.listen(PORT))
-    .then(() => logger.info(`Server listening at port ${PORT} for connections...`))
+    .then(server => {
+        logger.info(`Server listening at port ${PORT} for connections...`);
+        return new Promise((resolve, reject) => {
+            resolve(server);
+        });
+    })
     .catch(error => logger.info(`Server startup failure: ${error}`));
-
-module.exports = server;

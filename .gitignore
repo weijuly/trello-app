@@ -67,3 +67,4 @@ public/*.eot
 public/*.otf
 public/*.ttf
 public/*.svg
+.vscode/

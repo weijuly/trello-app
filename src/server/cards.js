@@ -2,6 +2,11 @@ import express from 'express';
 import Connection from './persistence';
 import logger from './logger';
 
+const errorToResponse = (err, res) => res.status(err.statusCode).send({
+    error: err.message
+});
+
+
 const router = express.Router();
 const connection = Connection.getInstance();
 
@@ -12,33 +17,31 @@ router.get('/', (req, res) => {
             cards: cards,
             server: 'version'
         }))
-        .catch(error => res.status(500).send({
-            error: error
-        }));
+        .catch(err => errorToResponse(err, res));
 });
 router.get('/:cardId', (req, res) => {
     connection
         .getCard(req.params.cardId)
         .then(card => res.send(card))
-        .catch(error => res.status(404).send({
-            error: error
-        }));
+        .catch(err => errorToResponse(err, res));
 });
 router.post('/', (req, res) => {
     connection
         .addCard(req.body)
         .then(card => res.status(201).send(card))
-        .catch(error => res.status(400).send({
-            error: error
-        }));
+        .catch(err => errorToResponse(err, res));
 });
 router.patch('/:cardId', (req, res) => {
     connection
-        .updateCard(req.body)
+        .updateCard(req.params.cardId, req.body)
         .then(card => res.send(card))
-        .catch(error => res.send(500).send({
-            error: error
-        }));
+        .catch(err => errorToResponse(err, res));
 });
+router.delete('/:cardId', (req, res) => {
+    connection
+        .deleteCard(req.params.cardId)
+        .then(card => res.send(card))
+        .catch(err => errorToResponse(err, res));
+})
 
 module.exports = router;
