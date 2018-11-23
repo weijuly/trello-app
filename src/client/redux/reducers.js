@@ -32,15 +32,7 @@ const Reducer = (state = initialState, action) => {
             return {
                 ...state,
                 addCard: {...state, show: false}
-            }
-        case 'ADD_CARD':
-            // do async call and return state
-            // will that async call work?
-            return {
-                ...state,
-                cards: [...state.cards, action.card],
-                addCard: {show: false}
-            }
+            };
         default:
             return {...state};
     }

@@ -12,7 +12,7 @@
     "express-server": "node index",
     "build": "webpack --config webpack.config.js --mode production",
     "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
-    "test": "jest --coverage --verbose --detectOpenHandles"
+    "test": "jest --config jest.config.json --no-cache --detectOpenHandles"
   },
   "author": "GopiKrishnan Ganesan <gopikrishnan.ganesan@gmail.com>",
   "license": "ISC",
