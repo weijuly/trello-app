@@ -19,14 +19,7 @@ the code. My rants on this experience below
 * [docker](https://www.docker.com/) for containerization, distribution and deployment
 
 ## Design
-The components are laid out in this heirarchy
-```
-TrelloPage the application container component
-    TrelloBoard 
-        TrelloColumn
-            TrelloCard
-                TrelloCardStateButton
-```
+
 
 ## Development
 Make sure you have the following dependencies:
@@ -34,13 +27,17 @@ Make sure you have the following dependencies:
 * npm 6.4.1
 * docker
 
-### Quick start
->> Environment setup: `$npm install`
-
->> Start development server: `$ npm run dev` and visit `localhost:3000` in your browser
-
->> Run tests: `$ npm test`
-
-## Build, Distribution
-
-## Deploy
+### Setting up
+On your shell
+```
+bash-3.2$ npm install 
+bash-3.2$ sh mongodb-persist/mongo-docker-start.sh # run the pre-configured docker image for mongodb backend
+bash-3.2$ npm test # run all tests
+bash-3.2$ npm run dev # run development server, visit http://localhost:3000/
+```
+### Build and Distribution
+```
+bash-3.2$ npm run build
+bash-3.2$ docker build -t <your-docker-id>/trello-app . # Build the image
+bash-3.2$ docker push <your-docker-id>/trello-app # Push the image to repository
+```
