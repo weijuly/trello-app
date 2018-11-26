@@ -23,7 +23,7 @@ class TrelloCard extends React.Component {
         return (
             <TrelloCardStateButton 
                 cardState={cardState}
-                handleStateChange={cardState => this.props.dispatch(Actions.updateCardState(this.props.card, cardState))}
+                handleCardStateChange={this.handleCardStateChange.bind(this)}
                 key={i}/>
         );
     }
@@ -35,15 +35,30 @@ class TrelloCard extends React.Component {
         return 'card';
     }
 
-    handleCardDueDateChange(date) {
+    async handleCardStateChange(cardState) {
+        const card = {
+            ...this.props.card,
+            state: cardState
+        };
+        await this.updateAndRefresh(card);
+    }
+
+    async handleCardDueDateChange(date) {
         const card = {
             ...this.props.card,
             due: moment(date).toISOString()
         };
-        Server.updateCard(card)
-            .then(Server.getCards())
-            .then(response => this.props.dispatch(Actions.loadCards(response.cards)))
-            .catch(error => console.log(error));
+        await this.updateAndRefresh(card);
+    }
+
+    async updateAndRefresh(card) {
+        try {
+            await Server.updateCard(card)
+            const response = await Server.getCards();
+            this.props.dispatch(Actions.loadCards(response.cards));
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     render() {

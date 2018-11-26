@@ -3,6 +3,7 @@ import React from 'react';
 import TrelloCard from './TrelloCard';
 
 export class TrelloColumn extends React.Component {
+    
     constructor(props) {
         super(props);
     }

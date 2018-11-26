@@ -13,11 +13,16 @@ class TrelloPage extends React.Component {
     }
 
     componentDidMount() {
-        Server.getCards()
-            .then(response => this.props.dispatch(Actions.loadCards(response.cards)))
-            .catch(error => {
-                console.log('error :' + error);
-            });
+        this.loadCards();
+    }
+
+    async loadCards() {
+        try {
+            const response = await Server.getCards();
+            this.props.dispatch(Actions.loadCards(response.cards));
+        } catch (err) {
+            console.log('error' + err);
+        }
     }
 
     render() {

@@ -3,7 +3,8 @@ import Connection from './persistence';
 import logger from './logger';
 
 const errorToResponse = (err, res) => res.status(err.statusCode).send({
-    error: err.message
+    error: err.message,
+    detail: err.detail
 });
 
 

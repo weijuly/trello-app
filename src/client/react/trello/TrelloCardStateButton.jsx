@@ -25,7 +25,7 @@ class TrelloCardStateButton extends React.Component {
         return (
             <button
                 type="button"
-                onClick={() => this.props.handleStateChange(this.props.cardState)}
+                onClick={() => this.props.handleCardStateChange(this.props.cardState)}
                 className={this.getButtonClass(this.props.cardState)}>
                 <span 
                     className={this.getIconClass(this.props.cardState)}

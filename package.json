@@ -2,7 +2,7 @@
   "name": "trello-app",
   "version": "1.0.0",
   "description": "trello app",
-  "main": "server.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/weijuly/trello-app"
