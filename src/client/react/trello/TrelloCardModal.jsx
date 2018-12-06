@@ -80,6 +80,17 @@ class TrelloCardModal extends React.Component {
         }
     }
 
+    async handleCardDelete() {
+        try {
+            await Server.deleteCard(this.props.card.id);
+            const response = await Server.getCards();
+            this.props.dispatch(Actions.loadCards(response.cards));
+            this.props.dispatch(Actions.hideCardEditor());
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     render() {
         return (
             <Modal visible={this.props.show}>
@@ -151,6 +162,7 @@ class TrelloCardModal extends React.Component {
                     <button
                         type='button'
                         disabled={this.state.disableDelete}
+                        onClick={this.handleCardDelete.bind(this)}
                         className='btn btn-danger'>
                         <span className='oi oi-trash'></span>
                     </button>

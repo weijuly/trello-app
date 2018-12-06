@@ -26,6 +26,13 @@ const Server = {
             body: JSON.stringify(card)
         });
         return await response.json();
+    },
+    deleteCard: async(cardId) => {
+        const response = await fetch(`/_api/cards/${cardId}`, {
+            method: 'DELETE',
+            headers: HEADERS
+        });
+        return await response.json();
     }
 };
 
