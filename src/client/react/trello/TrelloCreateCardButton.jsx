@@ -11,10 +11,10 @@ class TrelloCreateCardButton extends React.Component {
     render() {
         return (
             <button
-                className="btn btn-outline-primary"
+                className='btn btn-outline-primary'
                 onClick={() => this.props.dispatch(Actions.showAddCard())}
-                type="button">
-                <span className="oi oi-plus"></span>
+                type='button'>
+                <span className='oi oi-plus'></span>
             </button>
         );
     }

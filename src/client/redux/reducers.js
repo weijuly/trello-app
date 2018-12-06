@@ -2,6 +2,18 @@ const initialState = {
     cards: [],
     addCard: {
         show: false
+    },
+    cardEditor: {
+        show: false,
+        card: {
+            id: '',
+            header: '',
+            description: '',
+            state: '',
+            created: '',
+            due: '',
+            owner: ''
+        }
     }
 };
 
@@ -31,8 +43,35 @@ const Reducer = (state = initialState, action) => {
         case 'HIDE_ADD_CARD':
             return {
                 ...state,
-                addCard: {...state, show: false}
+                addCard: {...state.addCard, show: false}
             };
+        case 'SHOW_CARD_EDITOR':
+            return {
+                ...state,
+                cardEditor: {
+                    show: true,
+                    card: {
+                        ...action.card
+                    }
+                }
+            };
+        case 'HIDE_CARD_EDITOR':
+            return {
+                ...state,
+                cardEditor: {
+                    ...state.cardEditor,
+                    show: false
+                }
+            };
+        case 'EDIT_CARD':
+            return {
+                ...state,
+                cards: state.cards.map(x => x.id === action.card.id ? action.card : x),
+                cardEditor: {
+                    ...state.cardEditor,
+                    card: action.card
+                }
+            }
         default:
             return {...state};
     }

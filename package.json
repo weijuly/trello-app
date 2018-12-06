@@ -8,6 +8,7 @@
     "url": "https://github.com/weijuly/trello-app"
   },
   "scripts": {
+    "start": "node index.js",
     "webpack-watch": "webpack -w --mode development",
     "express-server": "node index",
     "build": "webpack --config webpack.config.js --mode production",

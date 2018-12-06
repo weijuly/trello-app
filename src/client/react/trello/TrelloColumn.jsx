@@ -18,8 +18,8 @@ export class TrelloColumn extends React.Component {
 
     render() {
         return (
-            <div className="col">
-                <h2 className="text-center">
+            <div className='col'>
+                <h2 className='text-center'>
                     {this.props.config.name}
                 </h2>
                 {this.props.cards.map(this.renderCard.bind(this))}

@@ -36,6 +36,23 @@ const Actions = {
             type: 'ADD_CARD',
             card: card
         };
+    },
+    showCardEditor: card => {
+        return {
+            type: 'SHOW_CARD_EDITOR',
+            card: card
+        };
+    },
+    hideCardEditor: () => {
+        return {
+            type: 'HIDE_CARD_EDITOR'
+        };
+    },
+    editCard: card => {
+        return {
+            type: 'EDIT_CARD',
+            card: card
+        }
     }
 };
 

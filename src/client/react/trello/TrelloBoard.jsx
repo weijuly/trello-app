@@ -24,7 +24,7 @@ export class TrelloBoard extends React.Component {
 
     render() {
         return (
-            <div className="row">
+            <div className='row'>
                 {this.COLUMNS.map(this.renderTrelloColumn.bind(this))}
            </div>
         );

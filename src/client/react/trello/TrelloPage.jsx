@@ -4,6 +4,7 @@ import React from 'react';
 import TrelloBoard from './TrelloBoard';
 import TrelloHeader from './TrelloHeader';
 import TrelloCreateCardModal from './TrelloCreateCardModal';
+import TrelloCardModal from './TrelloCardModal';
 import Server from '../../utils/server';
 
 class TrelloPage extends React.Component {
@@ -27,10 +28,11 @@ class TrelloPage extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid">
+            <div className='container-fluid'>
                 <TrelloHeader/>
                 <TrelloCreateCardModal/>
                 <TrelloBoard/>
+                <TrelloCardModal/>
             </div>
         );
     }

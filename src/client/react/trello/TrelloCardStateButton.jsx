@@ -24,12 +24,12 @@ class TrelloCardStateButton extends React.Component {
     render() {
         return (
             <button
-                type="button"
+                type='button'
                 onClick={() => this.props.handleCardStateChange(this.props.cardState)}
                 className={this.getButtonClass(this.props.cardState)}>
                 <span 
                     className={this.getIconClass(this.props.cardState)}
-                    aria-hidden="true">
+                    aria-hidden='true'>
                 </span>
             </button>
         );

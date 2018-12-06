@@ -53,7 +53,7 @@ class TrelloCard extends React.Component {
 
     async updateAndRefresh(card) {
         try {
-            await Server.updateCard(card)
+            await Server.updateCard(card);
             const response = await Server.getCards();
             this.props.dispatch(Actions.loadCards(response.cards));
         } catch (err) {
@@ -61,12 +61,19 @@ class TrelloCard extends React.Component {
         }
     }
 
+    handleCardEdit() {
+        this.props.dispatch(Actions.showCardEditor(this.props.card));        
+    }
+
     render() {
         return (
             <div className={this.cardContext(this.props.card.due)}>
                 <div className="card-body">
                     <h5 className="card-title">
-                    {this.props.card.header}
+                        <a href="#"
+                            onClick={this.handleCardEdit.bind(this)}>
+                            {this.props.card.header}
+                        </a>
                         <div className="float-right">
                             <small>
                                 <i>
