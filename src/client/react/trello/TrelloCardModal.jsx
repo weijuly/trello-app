@@ -17,28 +17,17 @@ class TrelloCardModal extends React.Component {
         this.state = {
             disableSubmit: true,
             disableClear: false,
-            disableDelete: this.props.card.id === '' ? false : true,
-            card: undefined
+            disableDelete: this.props.card.id ? true : false
         }
         this.date = '';
     }
 
     componentDidUpdate() {
-        if(!this.state.card) {
-            this.setState({
-                ...this.state,
-                card: this.props.card
-            });
-        }
+        this.props.dispatch(Actions.editCard(this.props.card));
     }
 
     hideCardEditor() {
-        this.props.dispatch(Actions.editCard(this.state.card));
         this.props.dispatch(Actions.hideCardEditor());
-        this.setState({
-            ...this.state,
-            card: undefined
-        });
     }
 
     handleDateChange(date) {
@@ -71,7 +60,15 @@ class TrelloCardModal extends React.Component {
 
     async handleCardSave() {
         try {
-            await Server.updateCard(this.props.card);
+            if (this.props.card.id) {
+                await Server.updateCard(this.props.card);
+            } else {
+                await Server.addCard({
+                    ...this.props.card,
+                    state: 'B',
+                    created: moment().toISOString()
+                });
+            }
             const response = await Server.getCards();
             this.props.dispatch(Actions.loadCards(response.cards));
             this.props.dispatch(Actions.hideCardEditor());
@@ -105,7 +102,7 @@ class TrelloCardModal extends React.Component {
                                 type='text'
                                 onChange={this.handleFieldChange.bind(this)}
                                 ref={this.cardHeaderInput}
-                                defaultValue={this.props.card.header}
+                                value={this.props.card.header}
                                 placeholder='title'/>
                         </div>
                         <div className='form-group'>
@@ -123,7 +120,7 @@ class TrelloCardModal extends React.Component {
                                         className='form-control'
                                         type='text'
                                         onChange={this.handleFieldChange.bind(this)}
-                                        defaultValue={this.props.card.owner}
+                                        value={this.props.card.owner}
                                         ref={this.cardOwnerInput}
                                         placeholder='assignee'/>
                                 </div>
@@ -135,7 +132,7 @@ class TrelloCardModal extends React.Component {
                                 type='text'
                                 onChange={this.handleFieldChange.bind(this)}
                                 ref={this.cardDescriptionInput}
-                                defaultValue={this.props.card.description}
+                                value={this.props.card.description}
                                 placeholder='a brief description'/>
                             <small 
                                 className='form-text text-muted'>
@@ -161,7 +158,7 @@ class TrelloCardModal extends React.Component {
                     </button>
                     <button
                         type='button'
-                        disabled={this.state.disableDelete}
+                        disabled={this.props.disableDelete}
                         onClick={this.handleCardDelete.bind(this)}
                         className='btn btn-danger'>
                         <span className='oi oi-trash'></span>
@@ -173,8 +170,7 @@ class TrelloCardModal extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log('mapped');
-    return state.cardEditor;
+    return state.editor;
 }
 
 export default connect(mapStateToProps)(TrelloCardModal);

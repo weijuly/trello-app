@@ -30,7 +30,6 @@ class TrelloPage extends React.Component {
         return (
             <div className='container-fluid'>
                 <TrelloHeader/>
-                <TrelloCreateCardModal/>
                 <TrelloBoard/>
                 <TrelloCardModal/>
             </div>
