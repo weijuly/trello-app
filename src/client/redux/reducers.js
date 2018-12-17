@@ -12,6 +12,11 @@ const initialState = {
             owner: ''
         },
         disableDelete: true
+    },
+    login: {
+        success: false,
+        user: undefined,
+        disableSubmit: true
     }
 };
 
@@ -58,6 +63,31 @@ const Reducer = (state = initialState, action) => {
                 editor: {
                     ...state.editor,
                     card: action.card
+                }
+            }
+        case 'ENABLE_LOGIN_SUBMIT':
+            return {
+                ...state,
+                login: {
+                    ...state.login,
+                    disableSubmit: false
+                }
+            }
+        case 'DISABLE_LOGIN_SUBMIT':
+            return {
+                ...state,
+                login: {
+                    ...state.login,
+                    disableSubmit: true
+                }
+            }
+        case 'LOGIN_SUCCESS':
+            return {
+                ...state,
+                login: {
+                    ...state.login,
+                    success: true,
+                    user: action.user.user
                 }
             }
         default:

@@ -1,6 +1,5 @@
 import express from 'express';
 import Connection from './persistence';
-import logger from './logger';
 
 const errorToResponse = (err, res) => res.status(err.statusCode).send({
     error: err.message,

@@ -44,3 +44,15 @@ db.trello.insert({
     due: '2019-08-30T17:57:07+00:00',
     owner: 'rshelley'
 });
+
+db.users.insert({
+    user: 'gganesan',
+    pass: 'gganesan',
+    name: 'GopiKrishnan Ganesan'
+});
+
+db.users.insert({
+    user: 'jdoe',
+    pass: 'jdoe',
+    name: 'John Doe'
+});

@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import Connection from './src/server/persistence';
 import logger from './src/server/logger';
+import auth from './src/server/auth';
 
 const PORT = 3000;
 const app = express();
@@ -11,6 +12,7 @@ const app = express();
 app.use('/_api', morgan('combined'));
 app.use('/_api', bodyParser.json());
 app.use('/_api/cards', cards);
+app.use('/_api/auth', auth);
 
 app.use('/', express.static('public'));
 
@@ -20,7 +22,7 @@ let server = undefined;
 
 module.exports = connection
     .connect()
-    .then(() => logger.info('Connected to databbase'))
+    .then(() => logger.info(`Connected to databbase`))
     .then(() => app.listen(PORT))
     .then(server => {
         logger.info(`Server listening at port ${PORT} for connections...`);

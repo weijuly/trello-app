@@ -8,34 +8,37 @@ const connectionString = 'mongodb://trello:password@localhost:27017/trello';
 const Connection = (() => {
     let instance = undefined;
     let connection = undefined;
-    let cursor = undefined;
+    let cardCursor = undefined;
+    let userCursor = undefined;
     const DATABASE = 'trello';
-    const COLLECTION = 'trello';
+    const CARD_COLLECTION = 'trello';
+    const USER_COLLECTION = 'users';
 
-    const serialize = card => {
-        if (!card._id) {
+    const serialize = object => {
+        if (!object._id) {
             return {
-                ...card
+                ...object
             };
         }
         return {
-            ...card,
-            id: card._id.toString(),
+            ...object,
+            id: object._id.toString(),
             _id: undefined
         };
     };
 
     const connect = async () => {
-        logger.info('Connecting to mongodb...');
+        logger.info(`Connecting to mongodb...`);
         connection = await MongoClient.connect(connectionString, {useNewUrlParser: true});
-        cursor = connection.db(DATABASE).collection(COLLECTION);
-        logger.info('Connected to mongodb');
+        cardCursor = connection.db(DATABASE).collection(CARD_COLLECTION);
+        userCursor = connection.db(DATABASE).collection(USER_COLLECTION);
+        logger.info(`Connected to mongodb`);
     };
 
     const getCard = async (cardId) => {
         try {
             logger.info(`Loading card: ${cardId}`);
-            let card = await cursor
+            let card = await cardCursor
                 .findOne({
                     _id: ObjectID(cardId)
                 });
@@ -46,14 +49,13 @@ const Connection = (() => {
         } catch (err) {
             throw new TrelloError(`Cannot find card with id: ${cardId}`, err, 500);
         }
-         
     };
 
     const updateCard = async (cardId, card) => {
         await getCard(cardId);
         try {
             logger.info(`Updating card: ${card.id}`);
-            let result = await cursor.updateOne({
+            let result = await cardCursor.updateOne({
                     _id: ObjectID(cardId)
                 }, {
                     $set: {
@@ -79,11 +81,11 @@ const Connection = (() => {
     const addCard = async (card) => {
         try {
             logger.info('Adding new card');
-            let result = await cursor
+            let result = await cardCursor
                 .insertOne(card);
             return serialize(result.ops[0]);
         } catch (err) {
-            throw new TrelloError(`Cannot insert new card`, error, 500);
+            throw new TrelloError(`Cannot insert new card`, err, 500);
         }
     };
 
@@ -91,7 +93,7 @@ const Connection = (() => {
         try {
             let cards = [];
             logger.info('Loading cards from database');
-            await cursor
+            await cardCursor
                 .find({})
                 .forEach(card => {
                     cards.push(serialize(card));
@@ -106,7 +108,7 @@ const Connection = (() => {
     const deleteCard = async (cardId) => {
         let card = await getCard(cardId);
         try {
-            let result = await cursor.deleteOne({
+            let result = await cardCursor.deleteOne({
                 _id: ObjectID(card.id)
             });
             if (result && result.deletedCount !== 1) {
@@ -119,6 +121,21 @@ const Connection = (() => {
         }
     };
 
+    const login = async (username, password) => {
+        try {
+            const user = await userCursor.findOne({
+                user: username,
+                pass: password
+            });
+            if (!user) {
+                throw new TrelloError(`Cannot find user: ${username} with pass: ${password}`, ``, 404);
+            }
+            return serialize(user);
+        } catch (err) {
+            throw new TrelloError(`Cannot find user: ${username} with pass: ${password}`, err, 404);
+        }
+    }
+
     function create(){
         return {
             connect: connect,
@@ -126,7 +143,8 @@ const Connection = (() => {
             getCard: getCard,
             addCard: addCard,
             updateCard: updateCard,
-            deleteCard: deleteCard
+            deleteCard: deleteCard,
+            login: login
         }
     }
     return {

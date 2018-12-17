@@ -3,7 +3,7 @@ import Actions from '../../redux/actions';
 import React from 'react';
 import TrelloBoard from './TrelloBoard';
 import TrelloHeader from './TrelloHeader';
-import TrelloCreateCardModal from './TrelloCreateCardModal';
+import TrelloLoginModal from './TrelloLoginModal';
 import TrelloCardModal from './TrelloCardModal';
 import Server from '../../utils/server';
 
@@ -32,6 +32,7 @@ class TrelloPage extends React.Component {
                 <TrelloHeader/>
                 <TrelloBoard/>
                 <TrelloCardModal/>
+                <TrelloLoginModal/>
             </div>
         );
     }

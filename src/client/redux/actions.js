@@ -53,6 +53,22 @@ const Actions = {
             type: 'EDIT_CARD',
             card: card
         }
+    },
+    enableLoginSubmit: () => {
+        return {
+            type: 'ENABLE_LOGIN_SUBMIT'
+        }
+    },
+    disableLoginSubmit: () => {
+        return {
+            type: 'DISABLE_LOGIN_SUBMIT'
+        }
+    },
+    loginSuccess: user => {
+        return {
+            type: 'LOGIN_SUCCESS',
+            user: user
+        }
     }
 };
 
