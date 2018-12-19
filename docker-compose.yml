@@ -1,0 +1,22 @@
+version: "3"
+services:
+    db:
+        image: mongo:3.4
+        volumes:
+            - /Users/gganesan/mac/code/pub-github/weijuly/trello-app/mongodb-persist/startup-scripts:/docker-entrypoint-initdb.d
+        networks:
+            - net
+    app:
+        image: app
+        build:
+            context: .
+        ports:
+            - "3000:3000"
+        depends_on:
+            - db
+        networks:
+            - net
+networks:
+    net:
+        driver: bridge
+        

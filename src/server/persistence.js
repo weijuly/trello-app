@@ -3,7 +3,7 @@ import logger from './logger';
 import TrelloError from './common';
 
 
-const connectionString = 'mongodb://trello:password@localhost:27017/trello';
+const connectionString = 'mongodb://trello:password@db:27017/trello';
 
 const Connection = (() => {
     let instance = undefined;
