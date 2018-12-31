@@ -47,7 +47,7 @@ const Connection = (() => {
             }
             return serialize(card);
         } catch (err) {
-            throw new TrelloError(`Cannot find card with id: ${cardId}`, err, 500);
+            throw new TrelloError(`Cannot find card with id: ${cardId}`, err, 404);
         }
     };
 

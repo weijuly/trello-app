@@ -60,20 +60,6 @@ describe('Reducer Unit Tests', () => {
         done();
     });
 
-    it('SHOW_ADD_CARD action should update state', done => {
-        const action = Actions.showAddCard();
-        const state = Reducer(generateSampleState(), action);
-        expect(state.addCard.show).toBeTruthy();
-        done();
-    });
-
-    it('HIDE_ADD_CARD action should update state', done => {
-        const action = Actions.hideAddCard();
-        const state = Reducer(generateSampleState(), action);
-        expect(state.addCard.show).toBeFalsy();
-        done();
-    });
-
     it('UNKNOWN action should not change state', done => {
         const state = Reducer(generateSampleState(), {type: 'UNKNOWN'});
         expect(state).toEqual(generateSampleState());
