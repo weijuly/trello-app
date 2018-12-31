@@ -14,7 +14,7 @@ const initialState = {
         disableDelete: true
     },
     login: {
-        success: false,
+        success: true,
         user: undefined,
         disableSubmit: true
     }
@@ -88,6 +88,14 @@ const Reducer = (state = initialState, action) => {
                     ...state.login,
                     success: true,
                     user: action.user.user
+                }
+            }
+        case 'SHOW_LOGIN':
+            return {
+                ...state,
+                login: {
+                    ...state.login,
+                    success: false
                 }
             }
         default:

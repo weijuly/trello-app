@@ -6,15 +6,22 @@ import TrelloHeader from './TrelloHeader';
 import TrelloLoginModal from './TrelloLoginModal';
 import TrelloCardModal from './TrelloCardModal';
 import Server from '../../utils/server';
+import Cookies from 'universal-cookie';
 
 class TrelloPage extends React.Component {
 
     constructor(props) {
         super(props);
+        this.cookie = new Cookies();
     }
 
     componentDidMount() {
-        this.loadCards();
+        const cookie = this.cookie.get('trello');
+        if (!cookie || cookie !== 'auth') {
+            this.props.dispatch(Actions.showLogin());
+        } else {
+            this.loadCards();
+        }
     }
 
     async loadCards() {

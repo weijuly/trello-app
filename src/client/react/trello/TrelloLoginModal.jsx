@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import Modal from 'react-bootstrap4-modal';
 import Actions from '../../redux/actions';
 import Server from '../../utils/server';
+import Cookies from 'universal-cookie';
 
 class TrelloLoginModal extends React.Component {
 
@@ -10,6 +11,7 @@ class TrelloLoginModal extends React.Component {
         super(props);
         this.usernameInput = React.createRef();
         this.passwordInput = React.createRef();
+        this.cookie = new Cookies();
     }
 
     handleFieldChange() {
@@ -28,11 +30,25 @@ class TrelloLoginModal extends React.Component {
             password: this.passwordInput.current.value
         };
 
+
         try {
             const response = await Server.login(request);
+            this.cookie.set('trello', 'auth', {
+                path: '/'
+            });
             this.props.dispatch(Actions.loginSuccess(response));
+            this.loadCards();
         } catch (err) {
             console.log(`Login failed: ${err}`);
+        }
+    }
+
+    async loadCards() {
+        try {
+            const response = await Server.getCards();
+            this.props.dispatch(Actions.loadCards(response.cards));
+        } catch (err) {
+            console.log('error' + err);
         }
     }
 

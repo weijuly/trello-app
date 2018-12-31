@@ -69,6 +69,11 @@ const Actions = {
             type: 'LOGIN_SUCCESS',
             user: user
         }
+    },
+    showLogin: () => {
+        return {
+            type: 'SHOW_LOGIN'
+        }
     }
 };
 
